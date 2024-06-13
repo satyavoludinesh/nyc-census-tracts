@@ -1,0 +1,34 @@
+---
+title: "NYC Census"
+author: "Dinesh Satyavolu"
+format: html
+---
+
+```{r}
+#| label: setup
+#| echo: false
+#| message: false
+library(tidyverse)
+library(primer.data)
+library(ggbeeswarm)
+library(viridis)
+```
+
+
+```{r}
+x <- read_csv("data/nyc_tracts.csv", show_col_types = FALSE)
+```
+
+```{r}
+x |> 
+  drop_na() |> 
+  ggplot(aes(x = med_income, y = race, color = race)) +
+    geom_quasirandom() +
+    scale_x_continuous(labels = scales::dollar_format()) + 
+    scale_color_viridis_d() + 
+    labs(title = "Household income distribution by largest racial/ethnic group",
+         subtitle = "Census tracts, New York City",
+         x = "Median household income",
+         y = NULL)
+```
+
